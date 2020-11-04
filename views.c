@@ -6,6 +6,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <kcgi.h>
 #include <kcgihtml.h>
@@ -119,8 +120,11 @@ do_search(const char *query, struct khtmlreq *req)
 		.sz	= 0,
 	};
 	const struct sqlbox_parmset *res;
-	size_t stmtid;
-	int found_something;
+	size_t stmtid = 0;
+	int found_something = 0;
+
+	if (strlen(query) < 3)
+		goto end;
 
 	stmtid = sqlbox_prepare_bind(p, 0, QUERY_SEARCH,
 	    1, &parms, SQLBOX_STMT_MULTI);
@@ -129,7 +133,6 @@ do_search(const char *query, struct khtmlreq *req)
 
 	khtml_elem(req, KELEM_DL);
 
-	found_something = 0;
 	for (;;) {
 		if ((res = sqlbox_step(p, stmtid)) == NULL)
 			errx(1, "sqlbox_step");
@@ -162,6 +165,7 @@ do_search(const char *query, struct khtmlreq *req)
 	}
 	khtml_closeelem(req, 1);
 
+end:
 	if (!found_something) {
 		khtml_elem(req, KELEM_P);
 		khtml_elem(req, KELEM_EM);
@@ -169,7 +173,7 @@ do_search(const char *query, struct khtmlreq *req)
 		khtml_closeelem(req, 2); /* em, p */
 	}
 
-	if (!sqlbox_finalise(p, stmtid))
+	if (stmtid && !sqlbox_finalise(p, stmtid))
 		errx(1, "sqlbox_finalise");
 }
 
