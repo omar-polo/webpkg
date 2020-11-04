@@ -32,6 +32,10 @@ header {
     padding: 10px;
 }
 
+header input[type=search] {
+    width: 100%;
+}
+
 @media only screen and (min-width: 414px) {
     header > .container {
         display: flex;
@@ -71,6 +75,7 @@ main {
     max-width: 700px;
     width: 100%;
     margin: 0 auto;
+    padding: 0 10px;
 }
 
 div.main {
@@ -155,6 +160,8 @@ blockquote {
     border-left: 2px solid black;
     padding-left: 1rem;
     margin: 2rem 0;
+
+    overflow-x: auto;
 }
 
 nav.port-links {
@@ -170,6 +177,7 @@ pre {
     border-radius: 4px;
     padding: 10px;
     box-shadow: 0 2px 3px #e3e3e3;
+    overflow-y: auto;
 }
 
 footer {

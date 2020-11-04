@@ -37,6 +37,7 @@ search_form(struct kreq *r, struct khtmlreq *req)
 	khtml_closeelem(req, 1);
 	khtml_attr(req, KELEM_INPUT,
 	    KATTR_ID, "query",
+	    KATTR_TYPE, "search",
 	    KATTR_NAME, "query",
 	    KATTR_VALUE, query == NULL ? "" : query,
 	    KATTR_PLACEHOLDER, "query (e.g. \"fzf\")",
