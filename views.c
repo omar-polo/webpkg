@@ -47,23 +47,36 @@ search_form(struct kreq *r, struct khtmlreq *req)
 }
 
 static void
-init_page(struct kreq *r, struct khtmlreq *req)
+init_page(struct kreq *r, struct khtmlreq *req, const char *title)
 {
 	khtml_elem(req, KELEM_DOCTYPE);
 	khtml_attr(req, KELEM_HTML,
 	    KATTR_LANG, "en", KATTR__MAX);
 	khtml_elem(req, KELEM_HEAD);
+
 	khtml_attr(req, KELEM_META,
 	    KATTR_CHARSET, "utf-8", KATTR__MAX);
+
 	khtml_attr(req, KELEM_META,
 	    KATTR_NAME, "viewport",
 	    KATTR_CONTENT, "initial-scale=1, width=device-width",
 	    KATTR__MAX);
+
+	khtml_elem(req, KELEM_TITLE);
+	khtml_puts(req, "WebPKG");
+	if (title) {
+		khtml_puts(req, ": ");
+		khtml_puts(req, title);
+	}
+
+	khtml_closeelem(req, 1);
+
 	khtml_attr(req, KELEM_LINK,
 	    KATTR_REL, "stylesheet",
 	    KATTR_HREF, "/webpkg.css",
 	    KATTR__MAX);
 	khtml_closeelem(req, 1);
+
 	khtml_elem(req, KELEM_BODY);
 
 	khtml_elem(req, KELEM_HEADER);
@@ -189,9 +202,16 @@ home_page(struct kreq *r)
 	khttp_body(r);
 
 	khtml_open(&req, r, 0);
-	init_page(r, &req);
 
 	if ((p = r->fieldmap[KEY_QUERY])) {
+		char *title;
+
+		if (asprintf(&title, "search results for \"%s\"",
+			    p->parsed.s) == -1)
+			err(1, "asprintf");
+		init_page(r, &req, title);
+		free(title);
+
 		khtml_attr(&req, KELEM_P,
 		    KATTR_CLASS, "version-disclaimer",
 		    KATTR__MAX);
@@ -199,6 +219,7 @@ home_page(struct kreq *r)
 		khtml_closeelem(&req, 1);
 		do_search(p->parsed.s, &req);
 	} else {
+		init_page(r, &req, NULL);
 		khtml_elem(&req, KELEM_P);
 		khtml_puts(&req, "Try searching for something "
 		    "using the form in the header.  What you type "
@@ -260,7 +281,7 @@ port_page(struct kreq *r)
 	khttp_head(r, kresps[KRESP_CONTENT_TYPE], "%s", kmimetypes[r->mime]);
 	khttp_body(r);
 
-	init_page(r, &req);
+	init_page(r, &req, r->fullpath+1);
 
 	khtml_elem(&req, KELEM_H2);
 	khtml_puts(&req, res->ps[0].sparm); /* fullpkgpath */
