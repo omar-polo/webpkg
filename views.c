@@ -247,13 +247,14 @@ port_page(struct kreq *r)
 		goto end;
 	}
 
-	assert(res->psz == 6);
+	assert(res->psz == 7);
 	assert(res->ps[0].type == SQLBOX_PARM_STRING);
 	assert(res->ps[1].type == SQLBOX_PARM_STRING);
 	assert(res->ps[2].type == SQLBOX_PARM_STRING);
 	assert(res->ps[3].type == SQLBOX_PARM_STRING);
 	assert(res->ps[4].type == SQLBOX_PARM_STRING);
 	/* assert(res->ps[5].type == SQLBOX_PARM_STRING); can be null */
+	/* assert(res->ps[6].type == SQLBOX_PARM_STRING); can be null */
 
 	khttp_head(r, kresps[KRESP_STATUS], "%s", khttps[KHTTP_200]);
 	khttp_head(r, kresps[KRESP_CONTENT_TYPE], "%s", kmimetypes[r->mime]);
@@ -299,12 +300,16 @@ port_page(struct kreq *r)
 	    KATTR__MAX);
 	khtml_puts(&req, "CVS web");
 	khtml_closeelem(&req, 2); /* a, li */
-	khtml_elem(&req, KELEM_LI);
-	khtml_attr(&req, KELEM_A,
-	    KATTR_HREF, "https://example.com",
-	    KATTR__MAX);
-	khtml_puts(&req, "WWW");
-	khtml_closeelem(&req, 2); /* a, li */
+
+	if (res->ps[6].type != SQLBOX_PARM_NULL) {
+		khtml_elem(&req, KELEM_LI);
+		khtml_attr(&req, KELEM_A,
+		    KATTR_HREF, res->ps[6].sparm,
+		    KATTR__MAX);
+
+		khtml_puts(&req, "WWW");
+		khtml_closeelem(&req, 2); /* a, li */
+	}
 	khtml_closeelem(&req, 2); /* ul, nav */
 
 	free(cvsweb);
