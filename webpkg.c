@@ -56,7 +56,7 @@ struct sqlbox_pstmt pstmts[QUERY__MAX] = {
 		"       pp.pkgstem,"
 		"       pp.comment,"
 		"       d.value,"
-		"       e.value,"
+		"       replace(replace(e.value, '@', ' at '), '.', ' dot '),"
 		"       r.value,"
 		"       pp.homepage"
 		"  from _paths p"
