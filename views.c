@@ -40,7 +40,7 @@ search_form(struct kreq *r, struct khtmlreq *req)
 	    KATTR_TYPE, "search",
 	    KATTR_NAME, "query",
 	    KATTR_VALUE, query == NULL ? "" : query,
-	    KATTR_PLACEHOLDER, "query (e.g. \"fzf\")",
+	    KATTR_PLACEHOLDER, "search (e.g. \"fzf\")",
 	    KATTR__MAX);
 
 	khtml_closeelem(req, 1);
