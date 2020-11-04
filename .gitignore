@@ -1,0 +1,5 @@
+*.o
+TAGS
+webpkg
+webpkg.sqlite
+*.core
