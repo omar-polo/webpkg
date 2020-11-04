@@ -93,7 +93,7 @@ end_page(struct khtmlreq *req)
 	khtml_elem(req, KELEM_P);
 	khtml_puts(req, "For any issue, please contact me at <op at omarpolo dot com>.");
 	khtml_closeelem(req, 1);
-	
+
 	khtml_elem(req, KELEM_P);
 	khtml_attr(req, KELEM_A,
 	    KATTR_HREF, "https://git.omarpolo.com/webpkg",
