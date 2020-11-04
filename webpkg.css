@@ -180,14 +180,13 @@ pre {
     overflow-y: auto;
 }
 
+hr {
+    color: #d7d7d7;
+}
+
 footer {
     margin: 2rem 0 1rem;
     font-style: italic;
-}
-
-footer > div.container {
-    border-top: 1px solid gray;
-    padding-top: 1rem;
 }
 
 footer p {

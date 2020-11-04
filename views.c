@@ -103,8 +103,9 @@ end_page(struct khtmlreq *req)
 	khtml_elem(req, KELEM_FOOTER);
 	khtml_attr(req, KELEM_DIV,
 	    KATTR_CLASS, "container", KATTR__MAX);
+	khtml_elem(req, KELEM_HR);
 	khtml_elem(req, KELEM_P);
-	khtml_puts(req, "For any issue, please contact me at <op at omarpolo dot com>.");
+	khtml_puts(req, "For any issue with webpkg, please contact me at <op at omarpolo dot com>.");
 	khtml_closeelem(req, 1);
 
 	khtml_elem(req, KELEM_P);
