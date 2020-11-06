@@ -152,12 +152,11 @@ dt code {
     margin: 2rem 0;
 }
 
-blockquote {
-    font-family: monospace;
-    white-space: pre;
-    font-size: 1rem;
-
+pre.pkg-descr {
+    border: 0;
     border-left: 2px solid black;
+    border-radius: 0;
+    box-shadow: 0 0 0 transparent;
     padding-left: 1rem;
     margin: 2rem 0;
 
