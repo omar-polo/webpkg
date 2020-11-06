@@ -64,17 +64,15 @@ init_page(struct kreq *r, struct khtmlreq *req, const char *title)
 
 	khtml_elem(req, KELEM_TITLE);
 	khtml_puts(req, "WebPKG");
-	if (title) {
-		khtml_puts(req, ": ");
-		khtml_puts(req, title);
-	}
-
+	if (title)
+		khtml_printf(req, ": %s", title);
 	khtml_closeelem(req, 1);
 
 	khtml_attr(req, KELEM_LINK,
 	    KATTR_REL, "stylesheet",
 	    KATTR_HREF, "/webpkg.css",
 	    KATTR__MAX);
+
 	khtml_closeelem(req, 1);
 
 	khtml_elem(req, KELEM_BODY);
@@ -138,7 +136,7 @@ do_search(const char *query, struct khtmlreq *req)
 	size_t stmtid = 0;
 	int found_something = 0;
 
-	if (strlen(query) < 3)
+	if (strlen(query) < 2)
 		goto end;
 
 	stmtid = sqlbox_prepare_bind(p, 0, QUERY_SEARCH,
@@ -300,9 +298,12 @@ port_page(struct kreq *r)
 	khtml_printf(&req, "pkg_add %s", res->ps[1].sparm); /* pkgname */
 	khtml_closeelem(&req, 2);
 
-	khtml_elem(&req, KELEM_BLOCKQUOTE);
+	khtml_attr(&req, KELEM_PRE,
+	    KATTR_CLASS, "pkg-descr",
+	    KATTR__MAX);
+	khtml_elem(&req, KELEM_CODE);
 	khtml_puts(&req, res->ps[3].sparm); /* descr */
-	khtml_closeelem(&req, 1);
+	khtml_closeelem(&req, 2);	    /* pre, code */
 
 	khtml_attr(&req, KELEM_P,
 	    KATTR_CLASS, "maintainer", KATTR__MAX);

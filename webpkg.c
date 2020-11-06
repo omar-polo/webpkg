@@ -28,8 +28,6 @@ enum page {
 	PAGE__MAX
 };
 
-const size_t page_no_extra_permitted = 0;
-
 const char *const pages[PAGE__MAX] = {
 	"index",		/* PAGE_INDEX */
 };
@@ -74,7 +72,7 @@ main(void)
 	struct kreq r;
 	struct sqlbox_cfg cfg;
 	struct sqlbox_src srcs[] = {
-		{.fname = "/webpkg.sqlite", .mode = SQLBOX_SRC_RO },
+		{ .fname = "/webpkg.sqlite", .mode = SQLBOX_SRC_RO },
 	};
 
 	memset(&cfg, 0, sizeof(cfg));
@@ -96,9 +94,7 @@ main(void)
 	    pages, PAGE__MAX, PAGE_INDEX) != KCGI_OK)
 		return 0;
 
-	if (r.mime != KMIME_TEXT_HTML)
-		handle_err(&r, KHTTP_404);
-	else if (r.method != KMETHOD_GET &&
+	if (r.method != KMETHOD_GET &&
 	    r.method != KMETHOD_HEAD)
 		handle_err(&r, KHTTP_405);
 	else {
