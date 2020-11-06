@@ -37,10 +37,10 @@ under FreeBSD in no time.
 
 You need a webserver that is able to execute CGI scripts (or FastCGI,
 but then you need slowcgi(8) or similar).  You also need to install
-[kcgi](kcgi) and [sqlbox](sqlbox) and a POSIX make.
+[kcgi][kcgi] and [sqlbox][sqlbox] and a POSIX make.
 
 For the database, you can download the tarball of sqlports from your
-preferred OpenBSD mirror ([for example](sqlports), and extract (it’s a
+preferred OpenBSD mirror ([for example][sqlports]), and extract (it’s a
 tar-bomb!) `share/sqlports`.
 
 [kcgi]: https://kristaps.bsd.lv/kcgi/
