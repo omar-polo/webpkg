@@ -24,8 +24,21 @@ body {
     justify-content: space-between;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+        color: #ececec;
+    }
+}
+
 a {
     color: blue;
+}
+
+@media (prefers-color-scheme: dark) {
+    a {
+        color: #a4a4ff;
+    }
 }
 
 header {
@@ -163,6 +176,12 @@ pre.pkg-descr {
     overflow-x: auto;
 }
 
+@media (prefers-color-scheme: dark) {
+    pre.pkg-descr {
+        border-left-color: #ececec;
+    }
+}
+
 nav.port-links {
     margin: 2rem 0;
 }
@@ -179,8 +198,21 @@ pre {
     overflow-y: auto;
 }
 
+@media (prefers-color-scheme: dark) {
+    pre {
+        border-color: #4d4949;
+        box-shadow: 0 2px 10px #000;
+    }
+}
+
 hr {
     color: #d7d7d7;
+}
+
+@media (prefers-color-scheme: dark) {
+    hr {
+        color: #ececec;
+    }
 }
 
 footer {
