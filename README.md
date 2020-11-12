@@ -11,7 +11,7 @@ features a full-text search and packages pages.
 	$ make install
 
 This will install the webpkg executable, the sqlite3 database and the
-CSS file in /var/www.  It’s recommended to use httpd with slowcgi:
+CSS file in `/var/www`.  It’s recommended to use httpd with slowcgi:
 
 	# rcctl enable httpd slowcgi
 	# rcctl start httpd slowcgi
