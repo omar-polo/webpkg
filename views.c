@@ -83,7 +83,10 @@ init_page(struct kreq *r, struct khtmlreq *req, const char *title)
 	khtml_elem(req, KELEM_H1);
 	khtml_attr(req, KELEM_A,
 	    KATTR_HREF, "/", KATTR__MAX);
-	khtml_puts(req, "WebPKG");
+	khtml_elem(req, KELEM_EM);
+	khtml_puts(req, "Web");
+	khtml_closeelem(req, 1);
+	khtml_puts(req, "PKG");
 	khtml_closeelem(req, 2); /* a, h1 */
 	search_form(r, req);
 	khtml_closeelem(req, 2); /* div, header */
@@ -220,8 +223,13 @@ home_page(struct kreq *r)
 	} else {
 		init_page(r, &req, NULL);
 		khtml_elem(&req, KELEM_P);
+		khtml_puts(&req, "WebPKG is a web interface for the "
+		    "OpenBSD package catalog.");
+		khtml_closeelem(&req, 1);
+
+		khtml_elem(&req, KELEM_P);
 		khtml_puts(&req, "Try searching for something "
-		    "using the form in the header.  What you type "
+		    "using the form at the top of the page.  Your query "
 		    "will be matched against the package name (");
 		khtml_elem(&req, KELEM_CODE);
 		khtml_puts(&req, "pkgstem");
